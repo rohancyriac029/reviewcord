@@ -147,7 +147,7 @@ export async function POST(request: NextRequest) {
     }
 
     // STEP 4: Generate AI summary if we have enough information
-    let aiSummary = paperData.notes;
+    let aiSummary = '';
     if (paperData.abstract || paperData.title) {
       try {
         console.log('Generating AI summary...');
@@ -166,7 +166,7 @@ export async function POST(request: NextRequest) {
         const summaryResult = await summaryResponse.json();
         if (summaryResult.success && summaryResult.data) {
           // Use the formatted summary text
-          aiSummary = summaryResult.data.summary || summaryResult.data.raw || paperData.notes;
+          aiSummary = summaryResult.data.summary || summaryResult.data.raw || '';
           console.log('AI summary generated');
         }
       } catch (summaryError) {

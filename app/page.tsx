@@ -11,6 +11,7 @@ export default function Home() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [filter, setFilter] = useState<'all' | 'not-reviewed' | 'in-progress' | 'reviewed'>('all');
+  const [expandedSummaries, setExpandedSummaries] = useState<Set<string>>(new Set());
   
   const [formData, setFormData] = useState({
     title: '',
@@ -20,6 +21,18 @@ export default function Home() {
     addedBy: '',
     notes: '',
   });
+
+  const toggleSummary = (paperId: string) => {
+    setExpandedSummaries(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(paperId)) {
+        newSet.delete(paperId);
+      } else {
+        newSet.add(paperId);
+      }
+      return newSet;
+    });
+  };
 
   useEffect(() => {
     fetchPapers();
@@ -303,9 +316,19 @@ export default function Home() {
               )}
 
               {paper.summary && (
-                <div className="paper-summary">
-                  <strong>📝 AI Summary:</strong>
-                  <div>{paper.summary}</div>
+                <div className="paper-summary-section">
+                  <button 
+                    onClick={() => toggleSummary(paper._id!.toString())}
+                    className="summary-toggle-btn"
+                  >
+                    {expandedSummaries.has(paper._id!.toString()) ? '▼' : '▶'} View AI Summary
+                  </button>
+                  {expandedSummaries.has(paper._id!.toString()) && (
+                    <div className="paper-summary">
+                      <strong>📝 AI Summary:</strong>
+                      <div>{paper.summary}</div>
+                    </div>
+                  )}
                 </div>
               )}
 

@@ -167,6 +167,30 @@ body {
   text-decoration: underline;
 }
 
+.paper-summary-section {
+  margin: 1rem 0;
+}
+
+.summary-toggle-btn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.summary-toggle-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
 .paper-summary {
   margin: 1rem 0;
   padding: 1rem;
@@ -174,6 +198,18 @@ body {
   border-radius: 8px;
   font-size: 0.9rem;
   border-left: 3px solid var(--primary);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .paper-summary strong {
